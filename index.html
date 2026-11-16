@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Destinasi Wisata Sulawesi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { background: #f8f9fa; }
+
+/* Carousel */
+.hero .carousel-item img { height: min(70vh, 520px); min-height: 280px; object-fit: cover; }
+.hero .carousel-caption {
+  bottom: 0; left: 0; right: 0; padding: 3rem 1rem 3.5rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, .65));
+}
+.hero .carousel-caption h1 { font-size: clamp(1.6rem, 5vw, 3rem); }
+
+/* Kartu wilayah & destinasi */
+.region-card, .dest-card {
+  border: none; border-radius: 12px; overflow: hidden; cursor: pointer;
+  transition: transform .3s, box-shadow .3s;
+}
+.region-card:hover, .dest-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, .15) !important; }
+.region-card img { height: 220px; object-fit: cover; width: 100%; }
+.dest-card img { height: 190px; object-fit: cover; width: 100%; }
+.dest-card .cat-badge { position: absolute; top: .6rem; left: .6rem; }
+
+/* Kartu kategori */
+.cat-card { border: none; border-radius: 12px; cursor: pointer; transition: transform .3s, box-shadow .3s; }
+.cat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, .15) !important; }
+
+/* Tombol kategori */
+.cat-btn.active { background: #198754; color: #fff; border-color: #198754; }
+
+/* Galeri di modal */
+#gal .carousel-item img { height: clamp(220px, 50vh, 460px); object-fit: cover; border-radius: 8px; }
+.thumb { padding: 0; border: 3px solid transparent; border-radius: 8px; overflow: hidden; background: none; opacity: .65; }
+.thumb img { width: 90px; height: 60px; object-fit: cover; display: block; }
+.thumb.active { border-color: #198754; opacity: 1; }
+
+@media (max-width: 575.98px) {
+  .region-card img { height: 180px; }
+  .thumb img { width: 70px; height: 48px; }
+}
+
+</style>
+</head>
+<body>
+
+<nav id="mainNav" class="navbar navbar-expand-lg navbar-dark bg-success sticky-top shadow-sm">
+  <div class="container">
+    <a data-page="beranda" class="navbar-brand fw-bold" href="#beranda">Destinasi Wisata Sulawesi</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Buka menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a data-page="beranda" class="nav-link" href="#beranda">Beranda</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Wilayah</a>
+          <ul class="dropdown-menu" id="navRegions"></ul>
+        </li>
+        <li class="nav-item"><a data-page="destinasi" class="nav-link" href="#destinasi">Destinasi</a></li>
+        <li class="nav-item"><a data-page="kategori" class="nav-link" href="#kategori">Kategori</a></li>
+        <li class="nav-item"><a data-page="tentang" class="nav-link" href="#tentang">Tentang</a></li>
+      </ul>
+      <form class="d-flex" role="search" id="searchForm">
+        <input class="form-control me-2" type="search" id="searchInput" placeholder="Cari wilayah / destinasi" aria-label="Cari">
+        <button class="btn btn-light" type="submit">Cari</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="page" id="page-beranda">
+<!-- Carousel -->
+<header id="beranda">
+  <div id="heroCarousel" class="carousel slide carousel-fade hero" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="wisata/Danau dan Gunung.jpg" data-fb="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Danau dan gunung di Sulawesi">
+        <div class="carousel-caption"><h1 class="fw-bold">Keindahan di Sulawesi</h1><p class="fs-5">Nikmati pemandangan alam yang asli.</p><a data-page="wilayah" href="#wilayah" class="btn btn-success btn-lg">Mulai Jelajahi</a></div>
+      </div>
+      <div class="carousel-item">
+        <img src="wisata/Pegunungan dan Lautan.jpg" data-fb="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Pegunungan dan lautan">
+        <div class="carousel-caption"><h1 class="fw-bold">Gunung &amp; Lautan</h1><p class="fs-5">Dari puncak pegunungan hingga terumbu karang.</p><a data-page="destinasi" href="#destinasi" class="btn btn-success btn-lg">Lihat Destinasi</a></div>
+      </div>
+      <div class="carousel-item">
+        <img src="wisata/Pemukiman dan Gunung.jpg" data-fb="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Pemukiman dan gunung">
+        <div class="carousel-caption"><h1 class="fw-bold">Budaya &amp; Alam</h1><p class="fs-5">Tradisi lokal yang hidup berdampingan dengan alam.</p><a data-page="wilayah" href="#wilayah" class="btn btn-success btn-lg">Pilih Wilayah</a></div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Sebelumnya</span></button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Berikutnya</span></button>
+  </div>
+</header>
+
+<!-- Statistik -->
+<section class="container my-5">
+  <div class="row text-center g-4">
+    <div class="col-md-4"><div class="card shadow-sm h-100"><div class="card-body">
+      <i class="bi bi-geo-alt-fill fs-1 text-primary"></i><h2 class="display-5 fw-bold text-primary" id="statRegions">6</h2>
+      <h5>Wilayah</h5><p class="text-muted mb-0">Jelajahi destinasi dari 6 wilayah Sulawesi</p></div></div></div>
+    <div class="col-md-4"><div class="card shadow-sm h-100"><div class="card-body">
+      <i class="bi bi-camera-fill fs-1 text-success"></i><h2 class="display-5 fw-bold text-success" id="statDests">30</h2>
+      <h5>Destinasi</h5><p class="text-muted mb-0">Rekomendasi tempat wisata terbaik</p></div></div></div>
+    <div class="col-md-4"><div class="card shadow-sm h-100"><div class="card-body">
+      <i class="bi bi-people-fill fs-1 text-warning"></i><h2 class="display-5 fw-bold text-warning">2.5M+</h2>
+      <h5>Pengunjung</h5><p class="text-muted mb-0">Total pengunjung per tahun</p></div></div></div>
+  </div>
+</section>
+
+</div>
+<div class="page d-none" id="page-wilayah">
+<!-- Wilayah -->
+<section class="container my-5" id="wilayah">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold">Wilayah Sulawesi</h2>
+    <p class="text-muted">Pilih wilayah, lalu klik <strong>Jelajahi</strong> untuk melihat destinasinya.</p>
+  </div>
+  <div class="row g-4" id="regionCards"></div>
+  <p id="noRegion" class="text-center text-danger mt-4 d-none">Wilayah tidak ditemukan. Coba kata kunci lain.</p>
+</section>
+
+</div>
+<div class="page d-none" id="page-destinasi">
+<!-- Destinasi + filter kategori -->
+<section class="container my-5" id="destinasi">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold">Destinasi Wisata di Sulawesi</h2>
+    <p class="text-muted">Filter berdasarkan kategori, lalu klik gambar atau tombol untuk melihat galeri dan informasi.</p>
+  </div>
+  <div class="d-flex flex-wrap justify-content-center gap-2 mb-2" id="catFilter"></div>
+  <p class="text-center text-muted small" id="resultInfo"></p>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4" id="destCards"></div>
+  <div id="noDest" class="text-center text-danger mt-4 d-none">
+    Destinasi tidak ditemukan. <button class="btn btn-link p-0 align-baseline" id="resetBtn">Reset pencarian &amp; filter</button>
+  </div>
+</section>
+
+</div>
+<div class="page d-none" id="page-kategori">
+<!-- Kategori -->
+<section class="container my-5" id="kategori">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold">Kategori Wisata</h2>
+    <p class="text-muted">Pilih kategori, lalu lihat destinasi yang sesuai.</p>
+  </div>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 justify-content-center" id="catCards"></div>
+</section>
+</div>
+<div class="page d-none" id="page-tentang">
+<!-- Tentang -->
+<section class="container my-5" id="tentang">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold">Tentang Website</h2>
+    <p class="text-muted">Informasi singkat tentang project Destinasi Wisata Sulawesi.</p>
+  </div>
+  <div class="row g-4">
+    <div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-body">
+      <h5 class="card-title">Tentang Project</h5>
+      <p class="card-text">Website ini memperkenalkan destinasi wisata dari 6 wilayah Sulawesi: Sulawesi Utara, Tengah, Selatan, Tenggara, Barat, dan Gorontalo. Pengunjung dapat memilih wilayah, memfilter destinasi berdasarkan kategori, mencari tempat wisata, dan melihat galeri fotonya.</p>
+    </div></div></div>
+    <div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-body">
+      <h5 class="card-title">Fitur</h5>
+      <ul class="mb-0">
+        <li>Lima halaman: Beranda, Wilayah, Destinasi, Kategori, Tentang</li>
+        <li>Filter kategori: Bahari, Alam, Gunung, Budaya, Pantai</li>
+        <li>Pencarian wilayah dan destinasi</li>
+        <li>Galeri foto pada setiap destinasi</li>
+        <li>Tampilan responsif untuk desktop, tablet, dan ponsel</li>
+      </ul>
+    </div></div></div>
+    <div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-body">
+      <h5 class="card-title">Wilayah</h5>
+      <p class="text-muted small">Klik nama wilayah untuk melihat destinasinya.</p>
+      <ul class="list-unstyled mb-0">
+        <li><a href="#" data-region="utara">Sulawesi Utara</a></li>
+        <li><a href="#" data-region="tengah">Sulawesi Tengah</a></li>
+        <li><a href="#" data-region="selatan">Sulawesi Selatan</a></li>
+        <li><a href="#" data-region="tenggara">Sulawesi Tenggara</a></li>
+        <li><a href="#" data-region="barat">Sulawesi Barat</a></li>
+        <li><a href="#" data-region="gorontalo">Gorontalo</a></li>
+      </ul>
+    </div></div></div>
+    <div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-body">
+      <h5 class="card-title">Teknologi &amp; Pembuat</h5>
+      <p class="card-text">Dibuat dengan HTML, CSS, JavaScript, dan Bootstrap 5.</p>
+      <p class="mb-1"><strong>Nama:</strong></p>
+<ol class="mb-2">
+  <li>Tupa Desiana</li>
+  <li>Mangintiku Nadia</li>
+  <li>Tamaela Rezica</li>
+</ol>
+      <p class="mb-0"><strong>Kelas:</strong> (Web Design F)</p>
+    </div></div></div>
+  </div>
+</section>
+</div>
+</main>
+<!-- Modal tunggal: daftar destinasi wilayah & detail/galeri -->
+<div class="modal fade" id="mainModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="modalTitle"></h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+  <div class="container">
+    <p class="mb-1 fw-bold">Destinasi Wisata Sulawesi</p>
+    <small>Jelajahi keindahan alam dan budaya Sulawesi.</small>
+    <hr class="opacity-25">
+    <small>&copy; 2026 Wisata Sulawesi. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script>
+/* ===== DATA ===== */
+const CATS = { bahari: 'Wisata Bahari', alam: 'Wisata Alam', gunung: 'Wisata Gunung', budaya: 'Wisata Budaya', pantai: 'Wisata Pantai' };
+const COLOR = { bahari: 'primary', alam: 'success', gunung: 'secondary', budaya: 'danger', pantai: 'warning text-dark' };
+
+// Foto cadangan (Unsplash) per kategori, dipakai jika gambar lokal tidak ditemukan
+const u = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=900&q=80`;
+const LAUT = '1544551763-46a013bb70d5', PANTAI = '1519046904884-53103b34b206', HUTAN = '1500375592092-40eb2168fd21',
+      GUNUNG = '1464822759023-fed622ff2c3b', DANAU = '1470770841072-f978cf4d019e', BUDAYA = '1518709268805-4e9042af9f23';
+const POOL = {
+  bahari: [LAUT, PANTAI, HUTAN, DANAU], pantai: [PANTAI, LAUT, DANAU, HUTAN],
+  alam: [HUTAN, DANAU, GUNUNG, PANTAI], gunung: [GUNUNG, DANAU, HUTAN, BUDAYA], budaya: [BUDAYA, GUNUNG, DANAU, HUTAN]
+}; for (const k in POOL) POOL[k] = POOL[k].map(u);
+
+// Placeholder terakhir (SVG) agar halaman tidak pernah rusak
+const PH = 'data:image/svg+xml,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+  '<stop offset="0" stop-color="#198754"/><stop offset="1" stop-color="#0dcaf0"/></linearGradient></defs>' +
+  '<rect width="900" height="600" fill="url(#g)"/><text x="450" y="310" font-family="Arial" font-size="42" fill="#fff" text-anchor="middle">Wisata Sulawesi</text></svg>');
+
+// [nama, kategori, deskripsi, gambar (opsional, default wisata/<nama>.jpg)]
+const REGIONS = [
+  { id: 'utara', name: 'Sulawesi Utara', img: 'dw/sulut.jpg', badge: 'primary', places: 'Manado, Bunaken, Tomohon',
+    desc: 'Nikmati wisata laut, gunung, dan pemandangan khas Sulawesi Utara, serta kuliner Manado.',
+    dests: [
+      ['Taman Nasional Bunaken', 'bahari', 'Terkenal dengan terumbu karang dan keanekaragaman biota laut, cocok untuk snorkeling dan menyelam.', 'wisata/Taman Nasional Bunaken.png'],
+      ['Tomohon', 'gunung', 'Daerah sejuk di kaki gunung dengan pemandangan pegunungan dan kebun bunga.', 'wisata/Tomohon.png'],
+      ['Danau Tondano', 'alam', 'Danau yang dikelilingi perbukitan dan permukiman.', 'wisata/Danau Tondano.png'],
+      ['Pantai Likupang', 'pantai', 'Pantai berpasir putih di pesisir Minahasa Utara dengan air laut yang jernih.', 'wisata/Pantai Likupang.png'],
+      ['Bukit Kasih', 'budaya', 'Kawasan wisata religi yang melambangkan kerukunan antarumat beragama.', 'wisata/Bukit Kasih.png'] ] },
+  { id: 'tengah', name: 'Sulawesi Tengah', img: 'dw/sulteng.jpg', badge: 'success', places: 'Palu, Tanjung Karang, Togean',
+    desc: 'Destinasi bahari, danau, dan pegunungan dengan panorama alam yang menenangkan.',
+    dests: [
+      ['Kepulauan Togean', 'bahari', 'Pulau tropis dan perairan jernih untuk menikmati keindahan laut.', 'wisata/Kepulauan Togean.png'],
+      ['Danau Poso', 'alam', 'Danau luas dengan panorama alam di sekitarnya.', 'wisata/Danau Poso.png'],
+      ['Taman Nasional Lore Lindu', 'gunung', 'Kawasan hutan dan bentang pegunungan dengan keanekaragaman hayati tinggi.', 'wisata/Lore Lindu.png'],
+      ['Tanjung Karang', 'pantai', 'Pantai dan perairan jernih di Donggala, dekat Palu.', 'wisata/Pantai Dongala.png'],
+      ['Lembah Bada', 'budaya', 'Lembah dengan situs batu megalit peninggalan masa lampau.', 'wisata/Lembah Bada.png'] ] },
+  { id: 'selatan', name: 'Sulawesi Selatan', img: 'dw/sulsel.jpg', badge: 'danger', places: 'Makassar, Toraja, Bantaeng',
+    desc: 'Dikenal dengan Tana Toraja, Pantai Losari, dan kawasan bahari Tanjung Bira.',
+    dests: [
+      ['Tanjung Bira', 'pantai', 'Pantai dengan pasir putih dan air laut yang jernih.', 'wisata/Tanjung Bira.png'],
+      ['Tana Toraja', 'budaya', 'Wisata budaya, rumah adat, dan lanskap pegunungan.', 'wisata/Makale.png'],
+      ['Pantai Losari', 'pantai', 'Tempat menikmati suasana tepi laut di Makassar.', 'wisata/Losari.png'],
+      ['Taman Nasional Bantimurung', 'alam', 'Kawasan karst, air terjun, dan kupu-kupu di Maros.', 'wisata/Batimurung.png'],
+      ['Pulau Samalona', 'bahari', 'Pulau kecil dekat Makassar yang populer untuk snorkeling.', 'wisata/Pulau Samalona.png'] ] },
+  { id: 'tenggara', name: 'Sulawesi Tenggara', img: 'dw/sultang.jpg', badge: 'warning text-dark', places: 'Kendari, Wakatobi, Buton',
+    desc: 'Sulawesi Tenggara menawarkan wisata bahari yang terkenal hingga mancanegara.',
+    dests: [
+      ['Taman Nasional Wakatobi', 'bahari', 'Destinasi menyelam dengan kehidupan bawah laut yang kaya.', 'wisata/Wakatobi.png'],
+      ['Pantai Kendari', 'pantai', 'Pilihan untuk menikmati suasana pesisir di Kendari.', 'wisata/Pulau Bokori.png'],
+      ['Pulau Labengki', 'bahari', 'Pulau dengan air laut dan gugusan batu yang menarik.', 'wisata/Labengki.png'],
+      ['Benteng Keraton Buton', 'budaya', 'Benteng peninggalan Kesultanan Buton, salah satu benteng terluas di dunia.', 'wisata/Benteng Keraton.png'],
+      ['Air Terjun Moramo', 'alam', 'Air terjun bertingkat di Konawe Selatan yang dikelilingi hutan.', 'wisata/Air Terjun Moramo.png'] ] },
+  { id: 'barat', name: 'Sulawesi Barat', img: 'dw/sulbar.jpg', badge: 'info', places: 'Mamuju, Pasangkayu, Polewali',
+    desc: 'Kenali pesisir, pegunungan, dan tradisi masyarakat Mandar.',
+    dests: [
+      ['Pantai Manakarra', 'pantai', 'Tempat menikmati pemandangan laut di Mamuju.', 'dw/sulbar.jpg'],
+      ['Pesisir Mandar', 'pantai', 'Pantai dan kehidupan masyarakat pesisir.', 'wisata/Mandar.png'],
+      ['Budaya Mandar', 'budaya', 'Tradisi lokal dan kekayaan budaya daerah.', 'wisata/Budaya Mandar.png'],
+      ['Pulau Karampuang', 'bahari', 'Pulau kecil di lepas pantai Mamuju dengan perairan jernih.', 'wisata/Pulau Karampuang.png'],
+      ['Pegunungan Mamasa', 'gunung', 'Dataran tinggi dengan udara sejuk dan budaya tradisional.', 'wisata/Mamasa.png'] ] },
+  { id: 'gorontalo', name: 'Gorontalo', img: 'dw/gorontalo.jpg', badge: 'secondary', places: 'Gorontalo, Olele, Limboto',
+    desc: 'Gorontalo memiliki wisata laut, pulau, dan pengalaman alam yang unik.',
+    dests: [
+      ['Botubarani', 'bahari', 'Dikenal sebagai lokasi pengamatan hiu paus pada waktu yang sesuai.', 'dw/gorontalo.jpg'],
+      ['Pantai Olele', 'bahari', 'Wisata bahari yang menarik untuk snorkeling dan menyelam.', 'wisata/Olele.png'],
+      ['Pulau Saronde', 'pantai', 'Pulau dengan suasana tropis dan panorama pantai.', 'wisata/Saronde.png'],
+      ['Danau Limboto', 'alam', 'Danau besar di Gorontalo dengan panorama perbukitan.', 'wisata/Limboto.png'],
+      ['Benteng Otanaha', 'budaya', 'Benteng bersejarah di atas bukit dengan pemandangan Danau Limboto.', 'wisata/Benteng Otanaha.png'] ] }
+];
+
+// Ratakan daftar destinasi
+const DESTS = [];
+REGIONS.forEach(r => r.dests.forEach((d, i) => DESTS.push({
+  id: r.id + ':' + i, i, region: r, name: d[0], cat: d[1], desc: d[2], img: d[3] || `wisata/${d[0]}.jpg`,
+  text: [d[0], CATS[d[1]], d[2], r.name, r.places].join(' ').toLowerCase()
+})));
+
+/* ===== HELPER ===== */
+const $ = s => document.querySelector(s);
+const fbOf = d => POOL[d.cat][(d.i + 2) % 4];
+const img = (src, fb, alt, extra = '') => `<img src="${src}" data-fb="${fb}" alt="${alt}" loading="lazy" ${extra}>`;
+const badge = c => `<span class="badge bg-${COLOR[c]}">${CATS[c]}</span>`;
+
+// Fallback gambar: lokal -> Unsplash -> placeholder SVG
+function imgFallback(t) {
+  if (t.tagName !== 'IMG') return;
+  const s = t.dataset.s || '0';
+  if (s === '0' && t.dataset.fb) { t.dataset.s = '1'; t.src = t.dataset.fb; }
+  else if (s !== '2') { t.dataset.s = '2'; t.src = PH; }
+}
+document.addEventListener('error', e => imgFallback(e.target), true);
+window.addEventListener('load', () => document.querySelectorAll('img').forEach(i => { if (i.complete && !i.naturalWidth) imgFallback(i); }));
+
+/* ===== STATE ===== */
+let cat = 'semua', query = '';
+const filteredDests = () => DESTS.filter(d => (cat === 'semua' || d.cat === cat) && (!query || d.text.includes(query)));
+
+/* ===== RENDER ===== */
+function destCard(d, col = 'col') {
+  return `<div class="${col}"><div class="card dest-card h-100 shadow-sm position-relative" data-dest="${d.id}">
+    ${img(d.img, fbOf(d), d.name, 'class="card-img-top"')}<span class="cat-badge">${badge(d.cat)}</span>
+    <div class="card-body d-flex flex-column"><h5 class="card-title">${d.name}</h5>
+    <small class="text-muted mb-2">${d.region.name}</small><p class="card-text small">${d.desc}</p>
+    <button class="btn btn-outline-success btn-sm mt-auto" data-dest="${d.id}">Lihat Galeri</button></div></div></div>`;
+}
+
+function renderRegions() {
+  const show = REGIONS.filter(r => !query || DESTS.some(d => d.region === r && d.text.includes(query)));
+  $('#regionCards').innerHTML = show.map(r => `<div class="col-md-6 col-lg-4">
+    <div class="card region-card h-100 shadow-sm" data-region="${r.id}">
+      ${img(r.img, POOL.alam[REGIONS.indexOf(r) % 4], 'Wisata ' + r.name, 'class="card-img-top"')}
+      <div class="card-body text-center p-4"><h4 class="mb-2">${r.name}</h4><p class="text-muted mb-2">${r.places}</p>
+      <span class="badge bg-${r.badge} mb-3">${r.dests.length} Destinasi</span><br>
+      <button class="btn btn-success" data-region="${r.id}">Jelajahi</button></div></div></div>`).join('');
+  $('#noRegion').classList.toggle('d-none', show.length > 0);
+}
+
+function renderDests() {
+  const list = filteredDests();
+  $('#destCards').innerHTML = list.map(d => destCard(d)).join('');
+  $('#noDest').classList.toggle('d-none', list.length > 0);
+  $('#resultInfo').textContent = `Menampilkan ${list.length} dari ${DESTS.length} destinasi` +
+    (cat !== 'semua' ? ` · ${CATS[cat]}` : '') + (query ? ` · kata kunci "${query}"` : '');
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+}
+
+const CAT_INFO = {
+  bahari: ['🤿', 'Terumbu karang, snorkeling, dan menyelam.'], alam: ['🌿', 'Danau, air terjun, dan taman nasional.'],
+  gunung: ['⛰️', 'Pegunungan dan dataran tinggi yang sejuk.'], budaya: ['🏛️', 'Situs sejarah, benteng, dan tradisi lokal.'],
+  pantai: ['🏖️', 'Pasir putih dan pemandangan tepi laut.']
+};
+function renderKategori() {
+  $('#catCards').innerHTML = Object.entries(CATS).map(([k, v]) => `<div class="col">
+    <div class="card cat-card shadow-sm h-100 text-center" data-catgo="${k}"><div class="card-body p-4">
+      <div class="fs-1" aria-hidden="true">${CAT_INFO[k][0]}</div><h5 class="mt-2">${v}</h5>
+      <span class="badge bg-${COLOR[k]} mb-2">${DESTS.filter(d => d.cat === k).length} Destinasi</span>
+      <p class="small text-muted">${CAT_INFO[k][1]}</p>
+      <button class="btn btn-success btn-sm" data-catgo="${k}">Lihat Destinasi</button></div></div></div>`).join('');
+}
+
+function renderAll() { renderRegions(); renderDests(); }
+
+function buildMenus() {
+  const items = Object.entries(CATS);
+  $('#catFilter').innerHTML = `<button class="btn btn-outline-success cat-btn" data-cat="semua">Semua</button>` +
+    items.map(([k, v]) => `<button class="btn btn-outline-success cat-btn" data-cat="${k}">${v}</button>`).join('');
+  $('#navRegions').innerHTML = `<li><a class="dropdown-item" href="#wilayah" data-page="wilayah">Semua Wilayah</a></li><li><hr class="dropdown-divider"></li>` +
+    REGIONS.map(r => `<li><a class="dropdown-item" href="#" data-region="${r.id}">${r.name}</a></li>`).join('');
+}
+
+/* ===== MODAL (daftar wilayah + detail galeri) ===== */
+const modalEl = $('#mainModal');
+const getModal = () => bootstrap.Modal.getOrCreateInstance(modalEl);
+let mRegion = null, mCat = 'semua';
+
+function showRegion(id, resetCat = true) {
+  mRegion = REGIONS.find(r => r.id === id);
+  if (resetCat) mCat = 'semua';
+  const cats = [...new Set(mRegion.dests.map(d => d[1]))];
+  const list = DESTS.filter(d => d.region === mRegion && (mCat === 'semua' || d.cat === mCat));
+  $('#modalTitle').textContent = 'Wisata ' + mRegion.name;
+  $('#modalBody').innerHTML = `<p>${mRegion.desc}</p>
+    <div class="d-flex flex-wrap gap-2 mb-3">${['semua', ...cats].map(c =>
+      `<button class="btn btn-sm btn-outline-success cat-btn ${c === mCat ? 'active' : ''}" data-mcat="${c}">${c === 'semua' ? 'Semua' : CATS[c]}</button>`).join('')}</div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">${list.map(d => destCard(d)).join('')}</div>`;
+  getModal().show();
+}
+
+function showDest(id) {
+  const d = DESTS.find(x => x.id === id);
+  mRegion = d.region;
+  const pool = POOL[d.cat];
+  const photos = [[d.img, fbOf(d)]];
+  $('#modalTitle').textContent = d.name;
+  $('#modalBody').innerHTML = `
+    <div id="gal" class="carousel slide" data-bs-ride="false">
+      <div class="carousel-inner">${photos.map((p, k) => `<div class="carousel-item ${k ? '' : 'active'}">${img(p[0], p[1], `${d.name} - foto ${k + 1}`, 'class="d-block w-100"')}</div>`).join('')}</div>
+
+    </div>
+    <div class="d-flex gap-2 my-3 flex-wrap">${photos.map((p, k) => `<button type="button" class="thumb ${k ? '' : 'active'}" data-bs-target="#gal" data-bs-slide-to="${k}" aria-label="Foto ${k + 1}">${img(p[0], p[1], 'Thumbnail ' + (k + 1))}</button>`).join('')}</div>
+    <div class="mb-2">${badge(d.cat)} <span class="badge text-bg-light border">${d.region.name}</span></div>
+    <p class="fs-5">${d.desc}</p>
+    <div class="d-flex gap-2 flex-wrap"><button class="btn btn-success" data-region="${d.region.id}">&larr; Kembali ke ${d.region.name}</button>
+    <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button></div>`;
+  $('#gal').addEventListener('slide.bs.carousel', e =>
+    document.querySelectorAll('#modalBody .thumb').forEach((t, k) => t.classList.toggle('active', k === e.to)));
+  getModal().show();
+}
+
+/* ===== EVENT ===== */
+/* ===== NAVIGASI HALAMAN (satu menu = satu halaman) ===== */
+const PAGES = ['beranda', 'wilayah', 'destinasi', 'kategori', 'tentang'];
+function showPage(p) {
+  if (!PAGES.includes(p)) p = 'beranda';
+  PAGES.forEach(x => $('#page-' + x).classList.toggle('d-none', x !== p));
+  document.querySelectorAll('.navbar-nav .nav-link:not(.dropdown-toggle)').forEach(a =>
+    a.classList.toggle('active', a.getAttribute('href') === '#' + p));
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+function go(p) { showPage(p); try { history.replaceState(null, '', '#' + p); } catch (_) {} }
+function goDestinasi() { go('destinasi'); }
+window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
+function closeNav() { try { const n = $('#navMenu'); if (n.classList.contains('show')) bootstrap.Collapse.getOrCreateInstance(n).hide(); } catch (_) {} }
+
+document.addEventListener('click', e => {
+  const t = e.target;
+  const pg = t.closest('a[data-page]');
+  if (pg) { e.preventDefault(); go(pg.dataset.page); closeNav(); return; }
+  const cg = t.closest('[data-catgo]');
+  if (cg) { cat = cg.dataset.catgo; renderDests(); go('destinasi'); return; }
+  const m = t.closest('[data-mcat]');
+  if (m) { mCat = m.dataset.mcat; return showRegion(mRegion.id, false); }
+  const dest = t.closest('[data-dest]');
+  if (dest) return showDest(dest.dataset.dest);
+  const reg = t.closest('[data-region]');
+  if (reg) { e.preventDefault(); if (reg.classList.contains('dropdown-item')) { go('wilayah'); closeNav(); } return showRegion(reg.dataset.region); }
+  const c = t.closest('[data-cat]');
+  if (c) {
+    e.preventDefault(); cat = c.dataset.cat; renderDests();
+    if (c.classList.contains('dropdown-item')) { closeNav(); goDestinasi(); }
+  }
+  if (t.closest('.navbar-nav .nav-link:not(.dropdown-toggle)')) closeNav();
+});
+
+$('#searchForm').addEventListener('submit', e => {
+  e.preventDefault(); query = $('#searchInput').value.trim().toLowerCase();
+  renderAll(); closeNav(); goDestinasi();
+});
+$('#searchInput').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); renderAll(); });
+$('#resetBtn').addEventListener('click', () => { query = ''; cat = 'semua'; $('#searchInput').value = ''; renderAll(); });
+
+/* ===== INIT ===== */
+$('#statRegions').textContent = REGIONS.length;
+$('#statDests').textContent = DESTS.length;
+buildMenus();
+renderKategori();
+renderAll();
+showPage(location.hash.slice(1));
+</script>
+</body>
+</html>
